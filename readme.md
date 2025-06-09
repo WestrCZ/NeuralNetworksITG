@@ -31,6 +31,18 @@ Výstupem je trojice tuple, která obsahuje obrázky a jejich štítky jako NumP
 
 - Štítky jsou pole celých čísel (třídy 0–9).
 
+Při vývoji, nebo testu je nutno vždy před spuštěním prvního skriptu aktivovat environment, jinak vám nebudou fungovat balíčky.
+
+### Powershell
+```bash
+.\neuronkyEnv\Scripts\Activate.ps1
+```
+
+### Bash
+```bash
+.\neuronkyEnv\Scripts\Activate.bat
+```
+
 Pro otestování dat z preprocesu spusťte v terminálu příkaz ```python test_load_preprocessed.py```. </br>
 Vystup by měl vypadat asi takto:
 ```bash
@@ -52,4 +64,10 @@ First training label vector (one-hot):
  [0.]]
 First validation label: 3
 First test label: 7
+```
+
+## Deaktivace venv
+Když chceme deaktivovat python prostředí naší neuronky, ve kterém máme balíčky, spustíme v terminálu
+```bash
+deactivate
 ```
