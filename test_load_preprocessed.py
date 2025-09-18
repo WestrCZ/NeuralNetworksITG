@@ -3,37 +3,42 @@ import matplotlib.pyplot as plt
 
 train, val, test = load_preprocessed_data()
 
+example_train = train[201] # You can choose any (in range ofc)
+example_val = val[0]
+example_test = test[0]
+
 print(f"Train data size: {len(train)}")
 print(f"Validation data size: {len(val)}")
 print(f"Test data size: {len(test)}")
 
-print(f"First training input shape: {train[0][0].shape}")
-print(f"First training label shape: {train[0][1].shape}")
-print(f"First training label vector (one-hot):\n{train[0][1]}")
+print(f"First training input shape: {example_test[0].shape}")
+print(f"First training label shape: {example_test[1].shape}")
+print(f"First training label vector (one-hot):\n{example_test[1]}")
 
-print(f"First validation label: {val[0][1]}")
-print(f"First test label: {test[0][1]}")
-print(f"Vstupní data: {train[0][0]}")
+print(f"First validation label: {example_val[1]}")
+print(f"First test label: {example_train[1]}")
+print(f"Vstupní data: {example_train[0]}")
 
 # Visualization
-X_train = train[201][0].reshape(28, 28) 
-X_val = val[0][0].reshape(28,28)
-X_test = test[0][0].reshape(28,28)
+
+train_img = example_train[0].reshape(28,28)
+val_img = example_val[0].reshape(28,28)
+test_img = example_test[0].reshape(28,28)
 
 plt.figure(figsize=(10, 5))
 
 plt.subplot(1, 3, 1)
-plt.imshow(X_train, cmap='gray')
+plt.imshow(train_img, cmap='gray')
 plt.title(f"Label: Train")
 plt.axis('off')
 
 plt.subplot(1, 3, 2)
-plt.imshow(X_val, cmap='gray')
+plt.imshow(val_img, cmap='gray')
 plt.title(f"Label: Validation")
 plt.axis('off')
 
 plt.subplot(1, 3, 3)
-plt.imshow(X_test, cmap='gray')
+plt.imshow(test_img, cmap='gray')
 plt.title(f"Label: Test")
 plt.axis('off')
 

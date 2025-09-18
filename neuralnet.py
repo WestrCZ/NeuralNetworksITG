@@ -5,12 +5,20 @@ def init():
     INPUT_SIZE = 729
     OUTPUT_SIZE = 10
     layer_sizes = []
-    weights = []
-    biases = []
+    weights_vector = []
+    weights_matrix = []
+    biases_vector = []
+    biases_matrix = []
 
     layer_sizes.append(INPUT_SIZE)
-    
-    # TODO: Případně vymazat idk, to je na vás. Dlouho jsem na to nekoukal.
+    layer_sizes.extend(inputLayers())
+    layer_sizes.append(OUTPUT_SIZE)
+
+    weights_vector,weights_matrix,biases_vector,biases_matrix = createWeightsAndBiases(layer_sizes)
+
+def inputLayers():
+    layer_sizes = []
+
     i = 0
     while True:
         print(f"How many nodes should layer {i+1} have?")
@@ -24,30 +32,37 @@ def init():
         else:
             print("Please enter a valid positive integer or 0 to stop.")
 
-    layer_sizes.append(OUTPUT_SIZE)
     print("layer_sizes:", layer_sizes)
+    return layer_sizes
 
-    for i in range(len(layer_sizes)-1): 
-        input_size = layer_sizes[i]
-        output_size = layer_sizes[i + 1]
+def createWeightsAndBiases(layers):
+    weights_vectored = []
+    biases_vectored = []
+
+    weights_matrixed = []
+    biases_matrixed = []
+
+    for i in range(len(layers)-1): 
+        input_size = layers[i]
+        output_size = layers[i + 1]
         weight_matrix = []
         bias_matrix = []
 
-        for j in range(layer_sizes[i]*layer_sizes[i+1]):
-            weight_matrix.append(np.random.rand())
+        for j in range(layers[i]*layers[i+1]):
+            # TODO: Consider Xavier initialization
+            randNum = np.random.uniform(-1, 1)
+            weights_vectored.append(randNum)
+            weight_matrix.append(randNum)
 
-        for j in range(layer_sizes[i+1]):
-            bias_matrix.append(np.random.rand())
+        for j in range(layers[i+1]):
+            # Biases tend to be initialized at 0.0
+            biases_vectored.append(0.0)
+            bias_matrix.append(0.0)
 
-        biases.append(np.array(bias_matrix).reshape(layer_sizes[i+1]))
-        weights.append(np.array(weight_matrix).reshape(layer_sizes[i],layer_sizes[i+1]))
-
-    print("Weight shapes:")
-    for w in weights:
-        print(f"Weights: {w}")
-
-    for b in biases:
-        print(f"Biases: {b}")
+        weights_matrixed.append(np.array(weight_matrix).reshape(input_size,output_size))
+        biases_matrixed.append(np.array(bias_matrix).reshape(output_size))
+    
+    return weights_vectored, weights_matrixed, biases_vectored, biases_matrixed
 
 def sigmoid(x):
     return 1 / (1 + math.exp(-x))
