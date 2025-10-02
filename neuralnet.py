@@ -64,8 +64,21 @@ def createWeightsAndBiases(layers):
     
     return weights_vectored, weights_matrixed, biases_vectored, biases_matrixed
 
-def sigmoid(x):
-    return 1 / (1 + math.exp(-x))
+def factorial(n):
+        fact = 1
+        for i in range(1, n + 1):
+            fact *= i
+        return fact
+def taylor(x):
+    e = 0
+    for i in range(10): # accuracy - keep the number even
+        e += x**i/factorial(i)
+    return e
+def sigmoid(x): # 5 digit accuracy
+    if(x >= 0):
+        return 1-1/(taylor(x)+1)
+    else:
+        return 1/(taylor(-x)+1)
 
 if __name__ == "__main__":
     init()
