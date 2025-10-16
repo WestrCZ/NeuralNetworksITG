@@ -1,5 +1,4 @@
 import tkinter as tk
-from drawing_gui import drawing_gui
 from forward_pass import ForwardPass
 
 
