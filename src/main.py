@@ -1,39 +1,21 @@
 import tkinter as tk
 from drawing_gui import drawing_gui
+from forward_pass import ForwardPass
 
 
 def MAIN():
-    """Hlavní funkce - spustí GUI a vrátí data po kliknutí na Odeslat"""
-    mnist_data = None
+    print("MAIN LOADED")
     
-    root = tk.Tk()
-    gui = drawing_gui(root)
+    # Vytvoř instanci
+    fp = ForwardPass()
     
-    # Centrace okna
-    root.eval('tk::PlaceWindow . center')
-    root.resizable(False, False)
+    # Zavolej funkci - otevře GUI
+    vector = fp.GetInputFromGUI(True)
     
-    # Spustit GUI
-    root.mainloop()
-    
-    # Po zavření získat data
-    mnist_data = gui.get_data()
-    
-    return mnist_data
+    # Teď máš vector s 784 hodnotami
+    print(vector)
+    print(vector.shape)  # (784,)
 
 
-# === POUŽITÍ ===
-if __name__ == "__main__":
-    print("Spouštím MNIST drawer...")
-    
-    # Zavolá se MAIN, otevře se GUI, uživatel nakreslí a klikne Odeslat
-    result = MAIN()
-    
-    # Po zavření okna máme data
-    if result:
-        print(f"Získáno {len(result)} hodnot")
-        print(f"První 5 hodnot: {result[:5]}")
-        non_zero = sum(1 for x in result if x > 0.01)
-        print(f"Aktivních pixelů: {non_zero}")
-    else:
-        print("Žádná data nebyla získána")
+# TADY VOLÁŠ FUNKCI!
+MAIN()
