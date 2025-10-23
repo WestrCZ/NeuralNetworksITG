@@ -1,5 +1,5 @@
 import tkinter as tk
-from drawing_gui import drawing_gui
+from gui import *
 
 
 def MAIN():
@@ -7,7 +7,7 @@ def MAIN():
     mnist_data = None
     
     root = tk.Tk()
-    gui = drawing_gui(root)
+    gui = gui(root)
     
     # Centrace okna
     root.eval('tk::PlaceWindow . center')
