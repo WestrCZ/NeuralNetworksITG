@@ -25,3 +25,19 @@ class MathOperations:
         for i in range(len(u)):
             resultVector.append(u[i] + v[i])
         return resultVector
+    
+    def factorial(self, n):
+        fact = 1
+        for i in range(1, n + 1):
+            fact *= i
+        return fact
+    def taylor(self, x):
+        e = 0
+        for i in range(10): # accuracy - keep the number even
+            e += x**i/self.factorial(i)
+        return e
+    def sigmoid(self, x): # 5 digit accuracy
+        if(x >= 0):
+            return 1-1/(self.taylor(x)+1)
+        else:
+            return 1/(self.taylor(-x)+1)

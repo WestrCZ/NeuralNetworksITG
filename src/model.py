@@ -65,8 +65,5 @@ class model:
 
         return weights_vectored, weights_matrixed, biases_vectored, biases_matrixed
 
-    def sigmoid(x):
-        return 1 / (1 + math.exp(-x))
-
     if __name__ == "__main__":
         init()
