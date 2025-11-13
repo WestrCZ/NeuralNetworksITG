@@ -65,5 +65,10 @@ class model:
 
         return weights_vectored, weights_matrixed, biases_vectored, biases_matrixed
 
+    def laodTrainedModel(self, path):
+        from json_loader import json_loader
+        structure, weights, biases = json_loader(path)
+        return structure, weights, biases
+    
     if __name__ == "__main__":
         init()
