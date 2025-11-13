@@ -1,5 +1,7 @@
 import json;
 
+model_path = "/PythonProjects/models/###_2025-11-13 14-23-24.280154.json"
+
 def json_loader(path):
     """
     Načte JSON soubor a vrátí 3 arraye: structure, weights, biases
@@ -19,7 +21,8 @@ def json_loader(path):
     
     return structure, weights, biases
 
-    
+json_loader(model_path)
+
 # MODEL:
 # weights:[ ],
 # iases: [ ],
