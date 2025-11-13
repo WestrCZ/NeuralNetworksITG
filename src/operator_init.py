@@ -35,5 +35,6 @@ def initialize_parameters(dimensions = (layer_sizes[0], layer_sizes[1], layer_si
     return weights, weights_delimeters, biases, biases_delimeters 
 
 def matrix_structure_convertor(weights, weights_delimeters):
-
+    return
 def vector_structure_convertor(weights):
+    return
