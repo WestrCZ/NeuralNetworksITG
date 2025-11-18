@@ -1,55 +1,58 @@
-import numpy as np
+from file_manager import FileManager as FM
+from datetime import datetime as Date
 import random as rnd
-import datetime
-import json
-from typing import Tuple
+import numpy as np
 
 class ModelShaper():
-
-    #Dimension definition - move elsewhere
-    INPUT_SIZE = 784
-    OUTPUT_SIZE = 10
-    LAYER_SIZES = [INPUT_SIZE, 16, 16, OUTPUT_SIZE]
- 
-    def create_structure(dimensions, biases_lower_bound = -10, biases_upper_bound = 10, model_name = "") -> Tuple[bool, dict]: 
+    def create(dimensions = [784, 16, 16, 10], biases_range = 10, name = "") -> dict: 
+        dimensions[0] = 784
         dimensions[-1] = 10
-        weights_length = 0
-        biases_length = 0
-        try:
-            for i in range(len(dimensions) - 1):
-                weights_length += dimensions[i] * dimensions[i + 1]
-                biases_length += dimensions[i + 1]
+        biases_range = biases_range if biases_range.bit_count() < 16 else 10 #to save memory, maybe reduntant
+        weights = []
+        biases = []
 
-            created_at = "".join(["-" if c == ":" else c for c in str(datetime.datetime.now())])
-            model_name = "".join([c if (ord(c) > 96 and ord(c) < 123) or (ord(c) > 64 and ord(c) < 91) else "#" for c in str(model_name)])
-            model_shape = {
-                "model_name": model_name,
-                "created_at": created_at,
-                "dimensions": dimensions,
-                "weights": [rnd.random() for _ in range(weights_length)],
-                "biases": [rnd.randint(biases_lower_bound, biases_upper_bound) for _ in range(weights_length)]
-            }
-            with open(f"{model_name}_{created_at}.json", "w") as f:
-                f.write(json.dumps(model_shape, indent=2),)
-        except Exception as e:
-            return False, {}, e
-        return True, model_shape, None
+        for i in range(1, len(dimensions)):
+            weights += [rnd.random() for _ in range(dimensions[i] * dimensions[i - 1])]
+            biases += [rnd.randint(-biases_range, biases_range) for _ in range(dimensions[i])]
 
+        model = {
+            "name": name,
+            "created_at": "".join(["-" if c == ":" else c for c in str(Date.now())]), #c stands for char
+            "dimensions": dimensions,
+            "biases": biases,
+            "weights": weights
+        }
+        return FM.save(model)
+    
     def to_matrices(model: dict) -> dict:
         dimensions = model["dimensions"]
-        weights = model["weights"]
-        biases = model["biases"]
-        weights_array = np.empty(dimensions, dtype=np.ndarray)
+        biases = np.empty(len(dimensions) - 1, dtype=np.ndarray)
+        weights = np.empty(len(dimensions) - 1, dtype=np.ndarray)
+        biases_index = 0
         weights_index = 0
-
-        for i in range(len(dimensions) - 1):
-            weights_array[i] = np.empty(dimensions[i + 1], dtype=float)
-            for _ in dimensions[i]:
-                for j in range(dimensions[i + 1]):
-                    weights_array[i][j] = weights[weights_index]
-                    weights_index += 1 
+        for i in range(1, len(dimensions)):
+            biases[i - 1] = model["biases"][biases_index : biases_index + dimensions[i]]
+            weights[i - 1] = np.empty((dimensions[i], dimensions[i - 1]), dtype=np.float32)
+            for j in range(1, dimensions[i]):
+                for k in range(1, dimensions[i - 1]):
+                    weights[i - 1][j][k] = model["weights"][weights_index]
+                    weights_index += 1
+            biases_index += dimensions[i]
+        model["biases"] = biases
+        model["weights"] = weights
+        return model
             
-    def to_vectors(weights: np.ndarray):
-        print("bruh")
+    def to_vectors(model: dict) -> dict:
+        biases = []
+        weights = []
+        for i in range(1, len(model["dimensions"])):
+            for j in range(len(model["weights"][i - 1])):
+                for k in range(len(model["weights"][i - 1][j])):
+                    weights.append(model["weights"][i - 1][j][k])
+            biases += list(model["biases"][i - 1])
 
-        
+        model["biases"] = np.array(biases, dtype=np.int16)
+        model["weights"] = np.array(weights, dtype=np.float32)
+        return model
+    
+ModelShaper.create()
