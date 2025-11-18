@@ -9,3 +9,4 @@ __pycache__/
 neuronkyEnv/
 data/
 models/
+data/preprocessed/
