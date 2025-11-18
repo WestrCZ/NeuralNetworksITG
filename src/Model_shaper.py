@@ -54,5 +54,3 @@ class ModelShaper():
         model["biases"] = np.array(biases, dtype=np.int16)
         model["weights"] = np.array(weights, dtype=np.float32)
         return model
-    
-ModelShaper.create()
