@@ -39,14 +39,20 @@ class FileManager():
             "model": model if exception is None else {},
             "exception": exception
         }
-    def load_folder(folder_path: str): 
+    def load_folder(folder_path: str):
+        models = [] 
         try:
-            models = [json.load(open(path, "r")) for path in Path(folder_path).iterdir()]
+            for path in Path(folder_path).iterdir():
+                result = FileManager.load(path)
+                if result["status"]:
+                    models.append(result["model"])
+                else:
+                    raise Exception(result["exception"])
             exception = None
         except Exception as e:
             exception = e
         return {
             "status": True if exception is None else False,
-            "models": models if exception is None else {},
+            "models": models if exception is None else [],
             "exception": exception
         }
