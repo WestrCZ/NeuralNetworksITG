@@ -1,4 +1,4 @@
-from file_manager import FileManager as FM
+from infrastracture.file_manager import FileManager as FM
 from datetime import datetime as Date
 import random as rnd
 import numpy as np
@@ -7,7 +7,6 @@ class ModelShaper():
     def create(dimensions = [784, 16, 16, 10], biases_range = 10, name = "") -> dict: 
         dimensions[0] = 784
         dimensions[-1] = 10
-        biases_range = biases_range if biases_range.bit_count() < 16 else 10 #to save memory, maybe reduntant
         weights = []
         biases = []
 
@@ -32,7 +31,7 @@ class ModelShaper():
         weights_index = 0
         for i in range(1, len(dimensions)):
             biases[i - 1] = model["biases"][biases_index : biases_index + dimensions[i]]
-            weights[i - 1] = np.empty((dimensions[i], dimensions[i - 1]), dtype=np.float32)
+            weights[i - 1] = np.empty((dimensions[i], dimensions[i - 1]))
             for j in range(1, dimensions[i]):
                 for k in range(1, dimensions[i - 1]):
                     weights[i - 1][j][k] = model["weights"][weights_index]
@@ -51,6 +50,6 @@ class ModelShaper():
                     weights.append(model["weights"][i - 1][j][k])
             biases += list(model["biases"][i - 1])
 
-        model["biases"] = np.array(biases, dtype=np.int16)
-        model["weights"] = np.array(weights, dtype=np.float32)
+        model["biases"] = np.array(biases)
+        model["weights"] = np.array(weights)
         return model

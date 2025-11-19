@@ -17,8 +17,8 @@ class FileManager():
             model["path"] = path
             with open(path, "w") as f:
                 f.write(json.dumps(model, indent=2))
-            model["biases"] = np.array(model["biases"], dtype=np.int16)
-            model["weights"] = np.array(model["weights"], dtype=np.float64)
+            model["biases"] = np.array(model["biases"])
+            model["weights"] = np.array(model["weights"])
             exception = None
         except Exception as e:
             exception = e
@@ -31,6 +31,8 @@ class FileManager():
     def load(path):
         try:
             model = json.load(open(path, "r"))
+            model["biases"] = np.array(model["biases"])
+            model["weights"] = np.array(model["weights"])
             exception = None
         except Exception as e:
             exception = e

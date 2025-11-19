@@ -1,5 +1,5 @@
 import tkinter as tk
-from gui import *
+from graphics.gui import *
 
 
 class main:

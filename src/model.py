@@ -1,8 +1,8 @@
+from forward_pass import forward_pass as fp
+from json_loader import json_loader as jl
 import numpy as np
-import json_loader as jl
-import forward_pass as fp
 
-class model:
+class model:    
     def __init__(self):
         self.weights_vector = []
         self.weights_matrix = []
@@ -15,11 +15,11 @@ class model:
         INPUT_SIZE = 729
         OUTPUT_SIZE = 10
         layer_sizes = []
-
+    
         layer_sizes.append(INPUT_SIZE)
         layer_sizes.extend(self.inputLayers())
         layer_sizes.append(OUTPUT_SIZE)
-
+    
         weights_vector, weights_matrix, biases_vector, biases_matrix = self.createWeightsAndBiases(layer_sizes)
         self.weights_vector = weights_vector
         self.weights_matrix = weights_matrix
@@ -50,13 +50,13 @@ class model:
         biases_vectored = []
         weights_matrixed = []
         biases_matrixed = []
-
+    
         for i in range(len(layers) - 1):
             input_size = layers[i]
             output_size = layers[i + 1]
             weight_matrix = np.random.uniform(-1, 1, (input_size, output_size))
             bias_matrix = np.zeros(output_size)
-
+    
             weights_vectored.extend(weight_matrix.flatten())
             biases_vectored.extend(bias_matrix)
             weights_matrixed.append(weight_matrix)
@@ -66,10 +66,10 @@ class model:
 
 if __name__ == "__main__":
     model_instance = model()
-    structure, weights, biases = jl.json_loader("./models/trained.model.json")
+    structure, weights, biases = jl("./models/trained.model.json")
 
     # Example call — replace with real MNIST input later
     dummy_input = np.random.rand(4, 1)
-    result = fp.forward_pass(model_instance, dummy_input)
+    result = fp(model_instance, dummy_input)
 
     print("Forward pass result:", result)
