@@ -1,4 +1,4 @@
-from infrastracture.file_manager import FileManager as FM
+from infrastructure.file_manager import FileManager as FM
 from datetime import datetime as Date
 import random as rnd
 import numpy as np
