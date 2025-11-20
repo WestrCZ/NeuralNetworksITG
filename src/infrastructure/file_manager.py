@@ -28,7 +28,7 @@ class FileManager():
             "exception": exception
         }
     
-    def load(path):
+    def load(path: str):
         try:
             model = json.load(open(path, "r"))
             model["biases"] = np.array(model["biases"])

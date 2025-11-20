@@ -4,14 +4,16 @@ import numpy as np
 
 class model:    
     def __init__(self):
+
+
+
+
+
         self.weights_vector = []
         self.weights_matrix = []
         self.biases_vector = []
         self.biases_matrix = []
         self.layer_sizes = []
-        self.init()
-
-    def init(self):
         INPUT_SIZE = 729
         OUTPUT_SIZE = 10
         layer_sizes = []

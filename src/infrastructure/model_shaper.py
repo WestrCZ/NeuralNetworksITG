@@ -4,15 +4,16 @@ import random as rnd
 import numpy as np
 
 class ModelShaper():
-    def create(dimensions = [784, 16, 16, 10], biases_range = 10, name = "") -> dict: 
-        dimensions[0] = 784
-        dimensions[-1] = 10
+    def create(name: str, inner_layers = [16, 16], bias_spread = 10) -> dict: 
+        dimensions = list(inner_layers)
+        dimensions.append(10)
+        dimensions.insert(0, 784)
         weights = []
         biases = []
 
         for i in range(1, len(dimensions)):
             weights += [rnd.random() for _ in range(dimensions[i] * dimensions[i - 1])]
-            biases += [rnd.randint(-biases_range, biases_range) for _ in range(dimensions[i])]
+            biases += [rnd.randint(-bias_spread, bias_spread) for _ in range(dimensions[i])]
 
         model = {
             "name": name,
