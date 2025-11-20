@@ -1,5 +1,5 @@
 from forward_pass import forward_pass as fp
-from file_manager import FileManager as fm
+from infrastructure.file_manager import FileManager as fm
 import numpy as np
 
 class model:    

@@ -126,7 +126,7 @@ class model:
 
 if __name__ == "__main__":
     model_instance = model()
-    structure, weights, biases = jl("./models/trained.model.json")
+    structure, weights, biases = FM.load("./models/trained.model.json")
 
     # Example call — replace with real MNIST input later
     dummy_input = np.random.rand(4, 1)

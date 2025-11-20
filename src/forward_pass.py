@@ -1,4 +1,4 @@
-from math_operations import MathOperations as MO
+from infrastructure.math_operations import MathOperations as MO
 import numpy as np
 
 def forward_pass(input: np.ndarray, model, layer_index=0) -> np.ndarray:
