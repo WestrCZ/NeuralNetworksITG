@@ -1,5 +1,5 @@
 import os
-import numpy as np  # type: ignore
+import numpy as np
 from mnist_loader import load_data_wrapper
 
 def save_preprocessed_data(filepath='./data/mnist_preprocessed.npz'):

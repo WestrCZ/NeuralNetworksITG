@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class MathOperations:
     def matrix_x_vector(matrix, vector):
         M = np.array(matrix)

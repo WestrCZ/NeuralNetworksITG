@@ -15,7 +15,8 @@ Některé části projektu mohou být identické těm, které má 3B1B ve [svém
 2. V root adresáři projektu otevřete terminál a spusťte příkaz:
 
    ```bash
-   python init.py
+   python /env/environment_init.py
+   ```
 Tento skript vytvoří virtuální prostředí, nainstaluje potřebné balíčky ze souboru requirements.txt a předzpracuje dataset ze souboru mnist.pkl.gz. Výsledná data budou uložena do složky /data ve formátu vhodném pro další vývoj.
 
 Výstupem je trojice tuple, která obsahuje obrázky a jejich štítky jako NumPy pole:
@@ -71,3 +72,9 @@ Když chceme deaktivovat python prostředí naší neuronky, ve kterém máme ba
 ```bash
 deactivate
 ```
+
+## mnist_preprocess.py
+Tento soubor rozbalí trénovací data z původního formátu do jiného, který už jsme schopni nějak přečíst.
+
+## mnist_loader.py
+Načítá z už rozbalených dat, jeho funkce budou používány v samotné neuronové síti.

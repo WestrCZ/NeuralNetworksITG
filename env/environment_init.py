@@ -14,7 +14,7 @@ def main():
     else:
         print("✅ Virtual environment already exists.")
 
-    # 2. Actiavte venv + install requirements
+    # 2. Activate venv + install requirements
     pip_path = os.path.join("neuronkyEnv", "Scripts", "pip.exe") if os.name == "nt" else os.path.join("neuronkyEnv", "bin", "pip")
     print("📦 Installing requirements...")
     run(f"{pip_path} install -r requirements.txt")
