@@ -7,11 +7,9 @@ function usually called by our neural network code.
 
 import pickle
 import gzip
+import numpy as np
 
-# Third-party libraries
-import numpy as np  # type: ignore
-
-class mnistLoader:
+class MnistLoader:
     def load_data():
         """Return the MNIST data as a tuple containing the training data,
         the validation data, and the test data.
@@ -38,8 +36,6 @@ class mnistLoader:
         f = gzip.open('./mnist.pkl.gz', 'rb')
         u = pickle._Unpickler(f)
         u.encoding = 'latin1'
-        # p = u.load()
-        # training_data, validation_data, test_data = pickle.load(f)
         training_data, validation_data, test_data = u.load()
         f.close()
         return (training_data, validation_data, test_data)

@@ -1,18 +1,19 @@
 {
-  "model_name": "###",
+  "name": "###",
   "created_at": "2025-11-13 14-23-24.280154",
+  "path": "c:\\Users\\mmoor\\source\\neuronkyhadr\\NeuralNetworksITG\\models\\trained.model.json",
   "dimensions": [
     2,
     2
+  ],
+  "biases": [
+    5,
+    -4
   ],
   "weights": [
     0.2699131263884348,
     0.8968399461085156,
     0.8178183990085197,
     0.18363655786390232
-  ],
-  "biases": [
-    5,
-    -4
   ]
 }

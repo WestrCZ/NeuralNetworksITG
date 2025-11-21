@@ -6,11 +6,11 @@ import os
 class FileManager():
     def save(model: dict) -> dict:
         try:
-            name = "".join([c if (ord(c) > 96 and ord(c) < 123) or (ord(c) > 64 and ord(c) < 91) else "#" for c in str(model["name"])]) if model["name"] != "" else "" #c stands for char
+            name = "".join([c if (ord(c) > 96 and ord(c) < 123) or (ord(c) > 64 and ord(c) < 91) else "#" for c in str(model["name"])]) #c stands for char
             folder_path = Path(f"{Path().resolve()}/models")
             if not folder_path.is_dir():
                 os.mkdir(folder_path)
-            path = f"{folder_path}/{name}_{model["created_at"]}.json"
+            path = f"{folder_path}\\{name}_{model["created_at"]}.json"
             model["name"] = name    
             model["biases"] = list(model["biases"])
             model["weights"] = list(model["weights"])
@@ -23,12 +23,12 @@ class FileManager():
         except Exception as e:
             exception = e
         return {
-            "status": True if exception is not None else False,
-            "model": model if exception is not None else {},
+            "status": True if exception is None else False,
+            "model": model if exception is None else {},
             "exception": exception
         }
     
-    def load(path: str):
+    def load(path: str) -> dict:
         try:
             model = json.load(open(path, "r"))
             model["biases"] = np.array(model["biases"])
@@ -41,7 +41,7 @@ class FileManager():
             "model": model if exception is None else {},
             "exception": exception
         }
-    def load_folder(folder_path: str):
+    def load_folder(folder_path: str) -> dict:
         models = [] 
         try:
             for path in Path(folder_path).iterdir():

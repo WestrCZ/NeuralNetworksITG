@@ -1,6 +1,6 @@
 import numpy as np
 
-class MathOperations:
+class MathOperations: # in the future remove all exception raising
     def matrix_x_vector(matrix, vector):
         M = np.array(matrix)
         v = np.array(vector)
@@ -40,3 +40,14 @@ class MathOperations:
             return 1-1/(MathOperations.taylor(x)+1)
         else:
             return 1/(MathOperations.taylor(-x)+1)
+    def cost_function(answer_vector, correct_vector):
+        """
+        answer_vector (forward pass): last layer of results (0-9) where for example [0.1, 0.45, ...], uncorrected result of nn, correct_vector: ideal anwser (pure 1)
+        """
+        if (len(answer_vector) == len(correct_vector)):
+            result = 0
+            for i in range(len(answer_vector)):
+                difference = correct_vector[i] - answer_vector[i]
+                result += difference * difference
+            return result
+        return ValueError
