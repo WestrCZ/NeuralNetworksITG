@@ -9,8 +9,8 @@ import pickle
 import gzip
 import numpy as np
 
-class MnistLoader:
-    def load_data():
+class Mnist:
+    def load():
         """Return the MNIST data as a tuple containing the training data,
         the validation data, and the test data.
 
@@ -41,7 +41,7 @@ class MnistLoader:
         return (training_data, validation_data, test_data)
 
 
-    def load_data_wrapper(self):
+    def load_wrapped(self):
         """Return a tuple containing ``(training_data, validation_data,
         test_data)``. Based on ``load_data``, but the format is more
         convenient for use in our implementation of neural networks.

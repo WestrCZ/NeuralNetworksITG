@@ -1,7 +1,12 @@
 from infrastructure.model_shaper import ModelShaper as MS
 from infrastructure.file_manager import FileManager as FM
-from pathlib import Path as Path
+from model import Model as Model
+from pathlib import Path
+from mnist import Mnist
+import random as rnd
+import numpy as np
 import time
+import ast
 
 class CLI():
     def load() -> dict:
@@ -55,14 +60,7 @@ class CLI():
                     if layers == "(X)" or layers == "X":
                         layers = [16, 16]
                         break
-                    else:
-                        for i, layer in enumerate(layers.split(",")):
-                            layer = layer.strip()
-                            if not layer.isdigit():
-                                inner_layers = []
-                                print(f"Layer {i + 1} is not int. Layer {i + 1} inputed value: {layer}")
-                                break
-                            inner_layers.append(int(layer.strip()))
+                    inner_layers = get_layer(layers, int)
                     if len(inner_layers) > 1:
                         break
                 while True:
@@ -79,7 +77,7 @@ class CLI():
                 print("Define name for the new model")
                 print("If you wish to use default input (X)")
                 name = input().strip()
-                result = MS.create("" if name == "(X)" or name == "X" else name, inner_layers, bias_spread)
+                result = MS.create("" if name == "(X)" or name == "X" else name, np.array(inner_layers), bias_spread)
                 if not result["status"]:
                     print(f"There was a problem with creating the defined that model:\nException: {result["exception"]}")
                     return []
@@ -98,7 +96,7 @@ class CLI():
                     models = [CLI.create()]
                 elif start == "(L)" or start == "L":
                     models = CLI.load()
-                else:     
+                else:
                     print(f"Not one of the options. Your answer: {start}")
                 print("Do you wish to continue adding models (O) or end (E)")
                 end = input()
@@ -113,18 +111,31 @@ class CLI():
                 return
             print("You can train or infer with models")
             while True:
-                print("Do you want to infer will all (I) train all (T) or decide on each one (E)")
+                print("Do you want to infer with all (I) train all (T) or decide on each one (E)")
                 all = input()
                 if all == "(I)" or all == "I":
                     for model in models:
-                        #add input for forward pass GUI or CLI
-                        #MR.forward_pass()
+                        #add CLI input for forward pass
+                        while True:
+                            print(f"Input the the first layer. Match this length {model["dimensions"][0]}\n Example: 0.54, 0.9999, 0.31252")
+                            print("If you wish to use random values (X)")
+                            first_layer = input()
+                            layer_list = []
+                            if first_layer == "(X)" or first_layer == "X":
+                                layer_list = [rnd.random() for _ in range(model["dimensions"][0])]
+                                break
+                            else:
+                                layer_list = get_layer(first_layer, float)
+                            if layer_list != []:
+                                break
+                        output = Model.forward(layer_list, model["weights"], model["biases"])
+                        print(f"Model with name: {Model["name"]} output {output}")
                         #print and save all results
                         print("Not implemented yet")
                     break
                 if all == "(T)" or all == "T":
+                    data = Mnist.load_wrapped()
                     for model in models:
-                        #input from mnist db
                         #training function here
                         #print and save all results
                         print("Not implemented yet")
@@ -134,15 +145,15 @@ class CLI():
                         while True:
                             print(f"Train (T) or Infer (I)\nModel name: {model["name"]}")
                             each = input()
+                            data = Mnist.load_wrapped()
                             if each == "(T)" or each == "T":
-                                #input from mnist db
-                                load_data_wrapper()#unfinished call
                                 #training function here
                                 #print and save results
                                 print("Not implemented yet")
                                 break
                             elif each == "(I)" or each == "I":
-                                #add input for forward pass
+                                #add CLI input for forward pass
+                                while True:
                                 #MR.forward_pass()
                                 #print and save results
                                 print("Not implemented yet")
@@ -155,5 +166,18 @@ class CLI():
                 break
         print("All models adressed\nEnding program ...")
         time.sleep(2)
+
+def get_layer(layer: str, element_type: type) -> list:
+    layer_list = []
+    for i, x in enumerate(layer.split(",")):
+        x = x.strip()
+        x_type = ast.literal_eval(layer)
+        if x != element_type:
+            print(f"Layer {i + 1} is not {element_type}. Layer {i + 1} inputed value: {layer} with type {x_type}")
+            layer_list = []
+            break
+        layer_list.append(element_type(layer))
+    return layer_list
+
 if __name__ == "__main__":
     CLI.main()

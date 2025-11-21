@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from mnist_loader import load_data_wrapper
+from mnist import load_data_wrapper
 
 def save_preprocessed_data(filepath='./data/mnist_preprocessed.npz'):
     os.makedirs(os.path.dirname(filepath), exist_ok=True)

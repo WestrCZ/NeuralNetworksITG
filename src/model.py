@@ -22,7 +22,7 @@ class Model:
         else:
             return activations
 #TODO Think about just inputing np.empty(len(weights)) into layers_activations instead of the odious new if
-    def forward(activations: np.ndarray, weights: np.ndarray, biases: np.ndarray, layers_activations: np.ndarray, layer_index = 0) -> np.ndarray:
+    def forward_train(activations: np.ndarray, weights: np.ndarray, biases: np.ndarray, layers_activations: np.ndarray, layer_index = 0) -> np.ndarray:
         """
         Forward pass
         Function for training

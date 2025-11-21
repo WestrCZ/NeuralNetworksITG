@@ -58,3 +58,7 @@ class FileManager():
             "models": models if exception is None else [],
             "exception": exception
         }
+    def save_results(resutls: np.array) -> dict:
+        #implement sessions which will record the result of a forward pass, what model was used using id and name
+        #add ids to model .jsons
+        print("Not implemented")
